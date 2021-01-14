@@ -3,7 +3,6 @@ import Moment from 'moment';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { createWriteStream } from 'streamsaver';
-import Panda from '@commaai/pandajs';
 import CommaAuth from '@commaai/my-comma-auth';
 import { raw as RawDataApi, drives as DrivesApi } from '@commaai/comma-api';
 import { timeout, interval } from 'thyming';
@@ -36,6 +35,8 @@ import { hash } from './utils/string';
 import { modifyQueryParameters } from './utils/url';
 import DbcUtils from './utils/dbc';
 import { demoLogUrls, demoRoute } from './demo';
+
+var can = require('socketcan');
 
 const RLogDownloader = require('./workers/rlog-downloader.worker');
 const LogCSVDownloader = require('./workers/dbc-csv-downloader.worker');
@@ -124,8 +125,8 @@ export default class CanExplorer extends Component {
     this.githubSignOut = this.githubSignOut.bind(this);
     this.downloadLogAsCSV = this.downloadLogAsCSV.bind(this);
 
-    this.pandaReader = new Panda();
-    this.pandaReader.onMessage(this.processStreamedCanMessages);
+    this.canReader = can.createRawChannel("vcan0", true);
+    this.canReader.onMessage(this.processStreamedCanMessages);
   }
 
   componentDidMount() {
@@ -1262,7 +1263,7 @@ export default class CanExplorer extends Component {
       this.setState({ attemptingPandaConnection: false });
     });
     try {
-      await this.pandaReader.start();
+      await this.canReader.start();
       this.setState({
         showOnboarding: false,
         showLoadDbc: true
