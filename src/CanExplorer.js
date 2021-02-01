@@ -1,8 +1,10 @@
+import { packCAN, unpackCAN } from 'can-message';
 import React, { Component } from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { createWriteStream } from 'streamsaver';
+// import Panda from '@commaai/pandajs';
 import CommaAuth from '@commaai/my-comma-auth';
 import { raw as RawDataApi, drives as DrivesApi } from '@commaai/comma-api';
 import { timeout, interval } from 'thyming';
@@ -35,8 +37,6 @@ import { hash } from './utils/string';
 import { modifyQueryParameters } from './utils/url';
 import DbcUtils from './utils/dbc';
 import { demoLogUrls, demoRoute } from './demo';
-
-var can = require('socketcan');
 
 const RLogDownloader = require('./workers/rlog-downloader.worker');
 const LogCSVDownloader = require('./workers/dbc-csv-downloader.worker');
@@ -119,14 +119,15 @@ export default class CanExplorer extends Component {
     );
     this.onStreamedCanMessagesProcessed = this.onStreamedCanMessagesProcessed.bind(
       this
-    );
+      );
+    this.processNewWebsocketMessage = this.processNewWebsocketMessage.bind(this);
     this.showingModal = this.showingModal.bind(this);
     this.lastMessageEntriesById = this.lastMessageEntriesById.bind(this);
     this.githubSignOut = this.githubSignOut.bind(this);
     this.downloadLogAsCSV = this.downloadLogAsCSV.bind(this);
+    this.messageBuffer = [];
 
-    this.canReader = can.createRawChannel("vcan0", true);
-    this.canReader.onMessage(this.processStreamedCanMessages);
+
   }
 
   componentDidMount() {
@@ -1141,7 +1142,20 @@ export default class CanExplorer extends Component {
     return obj;
   }
 
-  processStreamedCanMessages(newCanMessages) {
+  
+  async processNewWebsocketMessage(msg) {
+    let receiptTime = performance.now() / 1000;
+    let canMessages = unpackCAN(msg.data);
+    var messageBuffer = [];
+    messageBuffer.push({
+      time: receiptTime,
+      canMessages
+    });
+  
+    await this.processStreamedCanMessages(messageBuffer);
+  }
+
+  async processStreamedCanMessages(newCanMessages) {
     const { dbcText } = this.state;
     const {
       firstCanTime,
@@ -1162,7 +1176,6 @@ export default class CanExplorer extends Component {
       },
       {}
     );
-
     this.canStreamerWorker.postMessage({
       newCanMessages,
       prevMsgEntries,
@@ -1247,8 +1260,10 @@ export default class CanExplorer extends Component {
   }
 
   async handlePandaConnect(e) {
+    
     this.setState({ attemptingPandaConnection: true, live: true });
 
+    
     const persistedDbc = fetchPersistedDbc('live');
     if (persistedDbc) {
       const { dbc, dbcText } = persistedDbc;
@@ -1257,20 +1272,26 @@ export default class CanExplorer extends Component {
     this.canStreamerWorker = new CanStreamerWorker();
     this.canStreamerWorker.onmessage = this.onStreamedCanMessagesProcessed;
 
+    this.pandaReader = new WebSocket("ws://127.0.0.1:8080");
+    this.pandaReader.binaryType = "arraybuffer";
+    console.log("handling panda connect");
+    // this.pandaReader.onmessage = function () { console.log("recv");};
+    this.pandaReader.onmessage = this.processNewWebsocketMessage;
+      
     // if any errors go off during connection, mark as not trying to connect anymore...
-    const unlisten = this.pandaReader.onError((err) => {
-      console.error(err.stack || err);
-      this.setState({ attemptingPandaConnection: false });
-    });
+    // const unlisten = this.pandaReader.onerror((err) => {
+    //   console.error(err.stack || err);
+    //   this.setState({ attemptingPandaConnection: false });
+    // });
     try {
-      await this.canReader.start();
+      // await this.pandaReader.start();
       this.setState({
         showOnboarding: false,
         showLoadDbc: true
       });
     } catch (e) {}
     this.setState({ attemptingPandaConnection: false });
-    unlisten();
+    // unlisten();
   }
 
   githubSignOut(e, dataArray) {

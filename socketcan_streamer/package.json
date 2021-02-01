@@ -1,0 +1,11 @@
+{
+  "name": "socketcan_streamer",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "can-message": "^0.1.0",
+    "socketcan": "^2.8.0",
+    "ws": "^7.4.2"
+  }
+}

@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-
+/socketcan_streamer/node_modules
 # stylesheets
 /src/*.css
 /src/*.css.map

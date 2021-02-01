@@ -3081,6 +3081,11 @@ camelcase@^4.1.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
   integrity sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=
 
+can-message@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/can-message/-/can-message-0.1.0.tgz#288862d67a0dbd85dbc56da0a44f6e2bf1dfb030"
+  integrity sha512-pdsHTjQCXZsD6eccUcgAEb7hd85BSvCNnVXhW+oS0E1PqLAB8/b2dObGJxTHMEKn3VmCgOhI808DBfTjMQlNnQ==
+
 caniuse-api@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/caniuse-api/-/caniuse-api-3.0.0.tgz#5e4d90e2274961d46291997df599e3ed008ee4c0"
@@ -9215,7 +9220,7 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nan@*, nan@^2.10.0, nan@^2.12.1, nan@^2.13.2:
+nan@^2.10.0, nan@^2.12.1, nan@^2.13.2:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
@@ -12088,7 +12093,7 @@ sass-loader@8.0.2:
     schema-utils "^2.6.1"
     semver "^6.3.0"
 
-sax@>=0.6.0, sax@^1.2.4, sax@~1.2.4:
+sax@^1.2.4, sax@~1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
@@ -12481,14 +12486,6 @@ socket.io-parser@~3.3.0:
     component-emitter "~1.3.0"
     debug "~3.1.0"
     isarray "2.0.1"
-
-socketcan@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/socketcan/-/socketcan-2.8.0.tgz#f186387263ce72d6bfa09a8337783719403aba02"
-  integrity sha512-VniKc+pOE9d5sfn+xikjTzD70RexuRPZNzSJYT9VcpPNuxt+72MP3ZA0MzZ67u0ghBiQvz4Fla1WULBa3v/+0A==
-  dependencies:
-    nan "*"
-    xml2js ">=0.2.0"
 
 sockjs-client@1.4.0:
   version "1.4.0"
@@ -14857,19 +14854,6 @@ xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
-
-xml2js@>=0.2.0:
-  version "0.4.23"
-  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.23.tgz#a0c69516752421eb2ac758ee4d4ccf58843eac66"
-  integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==
-  dependencies:
-    sax ">=0.6.0"
-    xmlbuilder "~11.0.0"
-
-xmlbuilder@~11.0.0:
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
-  integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
 xmlchars@^2.1.1:
   version "2.2.0"

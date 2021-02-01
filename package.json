@@ -13,6 +13,7 @@
     "aphrodite": "^1.2.1",
     "babel-eslint": "^10.0.3",
     "base64-inline-loader": "^1.1.0",
+    "can-message": "^0.1.0",
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
     "config-request": "^0.5.1",
@@ -57,7 +58,6 @@
     "right-pad": "^1.0.1",
     "simple-statistics": "^4.1.0",
     "socket.io-client": "^2.0.3",
-    "socketcan": "^2.8.0",
     "stream-selector": "^0.1.1",
     "streamsaver": "^1.0.1",
     "thyming": "^0.1.1",
@@ -93,6 +93,7 @@
   },
   "scripts": {
     "start": "PORT=3001 env-cmd .env.development craco start",
+    "start-prod": "PORT=3001 env-cmd .env.production craco start",
     "build": "env-cmd .env.production craco build",
     "netlify-sass": "node-sass src/index.scss > src/index.css",
     "netlify-build": "yarn run netlify-sass && yarn run build",

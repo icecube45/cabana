@@ -34,9 +34,9 @@ export default class OnboardingModal extends Component {
   }
 
   attemptPandaConnection() {
-    if (!this.state.webUsbEnabled) {
-      return;
-    }
+    // if (!this.state.webUsbEnabled) {
+    //   return;
+    // }
     this.props.handlePandaConnect();
   }
 
@@ -104,8 +104,7 @@ export default class OnboardingModal extends Component {
           <button
             className={cx('button--secondary button--kiosk', {
               'is-disabled':
-                !this.state.webUsbEnabled
-                || this.props.attemptingPandaConnection
+                this.props.attemptingPandaConnection
             })}
             onClick={this.attemptPandaConnection}
           >
